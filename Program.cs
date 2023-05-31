@@ -18,11 +18,28 @@ class Program
                 break; // Exits loop if the name is blank
             }
 
-            Console.WriteLine("Enter the team member's skill level (a positive integer):");
-            int skillLevel = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the team member's courage factor (a decimal between 0.0 and 2.0)");
-            double courageFactor = double.Parse(Console.ReadLine());
+            int skillLevel;
+            while (true)
+            {
+                Console.WriteLine("Enter the team member's skill level (a positive integer):");
+                if (int.TryParse(Console.ReadLine(), out skillLevel) && skillLevel > 0)
+                {
+                    break; // Valid input, exit the loop
+                }
+                Console.WriteLine("Invalid input. Skill level must be a positive integer.");
+            }
+            
+            
+            double courageFactor;
+            while (true)
+            {
+                Console.WriteLine("Enter the team member's courage factor (a decimal between 0.0 and 2.0):");
+                if (double.TryParse(Console.ReadLine(), out courageFactor) && courageFactor >= 0.0 && courageFactor <= 2.0)
+                {
+                    break; // Valid input, exit loop
+                }
+                Console.WriteLine("Invalid input. Courage factor must be a decimal betwee 0.0 and 2.0.");
+            }
 
             TeamMember teamMember = new TeamMember(name, skillLevel, courageFactor);
             teamMembers.Add(teamMember);
@@ -38,6 +55,34 @@ class Program
             Console.WriteLine("Skill Level: " + teamMember.SkillLevel);
             Console.WriteLine("Courage Factor: " + teamMember.CourageFactor);
             Console.WriteLine();
+        }
+
+        
+        int bankDifficultyLevel;
+        while (true)
+        {
+            Console.WriteLine("Enter the bank's difficulty level (a positive integer):");
+            if (int.TryParse(Console.ReadLine(), out bankDifficultyLevel) && bankDifficultyLevel > 0)
+            {
+                break; // Valid input
+            }
+            Console.WriteLine("Invalid input. Bank difficulty level must be a positive integer.");
+        }
+
+        int totalSkillLevel = 0;
+        foreach (var teamMember in teamMembers)
+        {
+            totalSkillLevel += teamMember.SkillLevel;
+        }
+
+        Console.WriteLine("\nCalculating heist result...");
+        if (totalSkillLevel >= bankDifficultyLevel)
+        {
+            Console.WriteLine("Heist Successful!");
+        }
+        else
+        {
+            Console.WriteLine("Heist Failed!");
         }
 
         Console.ReadLine();
