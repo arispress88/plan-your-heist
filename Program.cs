@@ -28,8 +28,8 @@ class Program
                 }
                 Console.WriteLine("Invalid input. Skill level must be a positive integer.");
             }
-            
-            
+
+
             double courageFactor;
             while (true)
             {
@@ -38,7 +38,7 @@ class Program
                 {
                     break; // Valid input, exit loop
                 }
-                Console.WriteLine("Invalid input. Courage factor must be a decimal betwee 0.0 and 2.0.");
+                Console.WriteLine("Invalid input. Courage factor must be a decimal between 0.0 and 2.0.");
             }
 
             TeamMember teamMember = new TeamMember(name, skillLevel, courageFactor);
@@ -57,7 +57,7 @@ class Program
             Console.WriteLine();
         }
 
-        
+
         int bankDifficultyLevel;
         while (true)
         {
@@ -69,27 +69,43 @@ class Program
             Console.WriteLine("Invalid input. Bank difficulty level must be a positive integer.");
         }
 
+        int trialRuns;
+        while (true)
+        {
+            Console.WriteLine("Enter the number of trial runs to perform (a positive integer):");
+            if (int.TryParse(Console.ReadLine(), out trialRuns) && trialRuns > 0)
+            {
+                break; // Valid input
+            }
+            Console.WriteLine("Invalid input. Number of trial runs must be a positive integer.");
+        }
+
         Random random = new Random();
-        int luckValue = random.Next(-10, 11);
-        int modifiedDifficultyLevel = bankDifficultyLevel + luckValue;
+        for (int i = 1; i < trialRuns; i++)
+        {
+            
 
-        int totalSkillLevel = 0;
-        foreach (var teamMember in teamMembers)
-        {
-            totalSkillLevel += teamMember.SkillLevel;
-        }
+            int luckValue = random.Next(-10, 11);
+            int modifiedDifficultyLevel = bankDifficultyLevel + luckValue;
 
-        Console.WriteLine("\nCalculating heist result...");
-        Console.WriteLine($"Team's Combind Skill Level: {totalSkillLevel}");
-        Console.WriteLine($"Bank's Modified Difficulty Level: {modifiedDifficultyLevel}");
-        
-        if (totalSkillLevel >= modifiedDifficultyLevel)
-        {
-            Console.WriteLine("Heist Successful!");
-        }
-        else
-        {
-            Console.WriteLine("Heist Failed!");
+            int totalSkillLevel = 0;
+            foreach (var teamMember in teamMembers)
+            {
+                totalSkillLevel += teamMember.SkillLevel;
+            }
+
+            Console.WriteLine("\nCalculating heist result...");
+            Console.WriteLine($"Team's Combind Skill Level: {totalSkillLevel}");
+            Console.WriteLine($"Bank's Modified Difficulty Level: {modifiedDifficultyLevel}");
+
+            if (totalSkillLevel >= modifiedDifficultyLevel)
+            {
+                Console.WriteLine("Heist Successful!");
+            }
+            else
+            {
+                Console.WriteLine("Heist Failed!");
+            }
         }
 
         Console.ReadLine();
