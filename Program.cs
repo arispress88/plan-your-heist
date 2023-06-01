@@ -5,7 +5,19 @@ class Program
     static void Main()
     {
         Console.WriteLine("Plan Your Heist!");
-
+       
+       
+        int bankDifficultyLevel;
+        while (true)
+        {
+            Console.WriteLine("Enter the bank's difficulty level (a positive integer):");
+            if (int.TryParse(Console.ReadLine(), out bankDifficultyLevel) && bankDifficultyLevel > 0)
+            {
+                break; // Valid input
+            }
+            Console.WriteLine("Invalid input. Bank difficulty level must be a positive integer.");
+        }
+        
         List<TeamMember> teamMembers = new List<TeamMember>();
 
         while (true)
@@ -58,16 +70,7 @@ class Program
         }
 
 
-        int bankDifficultyLevel;
-        while (true)
-        {
-            Console.WriteLine("Enter the bank's difficulty level (a positive integer):");
-            if (int.TryParse(Console.ReadLine(), out bankDifficultyLevel) && bankDifficultyLevel > 0)
-            {
-                break; // Valid input
-            }
-            Console.WriteLine("Invalid input. Bank difficulty level must be a positive integer.");
-        }
+        
 
         int trialRuns;
         while (true)
@@ -81,6 +84,10 @@ class Program
         }
 
         Random random = new Random();
+
+        int successfulRuns = 0;
+        int failedRuns = 0;
+
         for (int i = 1; i < trialRuns; i++)
         {
             
@@ -94,19 +101,25 @@ class Program
                 totalSkillLevel += teamMember.SkillLevel;
             }
 
-            Console.WriteLine("\nCalculating heist result...");
-            Console.WriteLine($"Team's Combind Skill Level: {totalSkillLevel}");
+            Console.WriteLine($"\n----- Trial Run {i} -----");
+            Console.WriteLine($"Team's Combined Skill Level: {totalSkillLevel}");
             Console.WriteLine($"Bank's Modified Difficulty Level: {modifiedDifficultyLevel}");
 
             if (totalSkillLevel >= modifiedDifficultyLevel)
             {
                 Console.WriteLine("Heist Successful!");
+                successfulRuns++;
             }
             else
             {
                 Console.WriteLine("Heist Failed!");
+                failedRuns++;
             }
         }
+
+        Console.WriteLine("\n----- Report -----");
+        Console.WriteLine($"Successful Runs: {successfulRuns}");
+        Console.WriteLine($"Failed Runs: {failedRuns}");
 
         Console.ReadLine();
     }
